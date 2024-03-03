@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>NoteMaster</h1>
+        <h2>Welcome, {{ session['username'] }}</h2>
+        <form action="/add_note" method="post">
+            <textarea name="note" cols="100" rows="10" placeholder="Enter your note here"></textarea> <br><br>
+            <button>Add Note</button>
+        </form>
+        <h3>Your Notes:</h3>
+        <ul>
+            {% for note in notes %}
+                <li>
+                    {% if note.get('editing', False) %}
+                        <form action="/save_edit/{{ loop.index0 }}" method="post" style="display: inline;">
+                            <input type="text" name="note" value="{{ note['content'] }}">
+                            <button>Save</button>
+                        </form>
+                    {% else %}
+                        {{ note['content'] }} - {{ note['timestamp'] }}
+                        <form action="/edit_note/{{ loop.index0 }}" method="post" style="display: inline;">
+                            <button>Edit</button>
+                        </form>
+                        <form action="/delete_note/{{ loop.index0 }}" method="post" style="display: inline;">
+                            <button>Delete</button>
+                        </form>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
