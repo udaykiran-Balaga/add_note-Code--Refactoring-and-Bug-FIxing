@@ -13,7 +13,21 @@ Create a new folder for your project:
 
 
 mkdir note-taking-app
+
 cd note-taking-app
+
+Create a virtual environment (optional but recommended):
+
+python -m venv venv
+Activate the virtual environment:
+
+Windows:
+
+venv\Scripts\activate
+
+macOS/Linux:
+
+source venv/bin/activate
 
 Create a file named app.py for your Flask application:
 
